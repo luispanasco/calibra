@@ -8,6 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [categories, products] = await Promise.all([getCategories(), getProducts()]);
   return [
     { url: SITE_URL, priority: 1 },
+    { url: `${SITE_URL}/contacto`, priority: 0.6 },
     ...categories.map((c) => ({ url: `${SITE_URL}/${c.slug}`, priority: 0.8 })),
     ...products.map((p) => ({ url: `${SITE_URL}${productUrl(p)}`, priority: 0.7 })),
   ];

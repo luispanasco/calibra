@@ -4,6 +4,7 @@ import type { Category, Site } from "@/lib/data";
 import { whatsappUrl } from "@/lib/links";
 import { ArrowUpRight, WhatsAppIcon } from "./Icons";
 import { LaunchWordmark } from "./LaunchWordmark";
+import { DEFAULT_MESSAGE, LOCATIONS, formatPhone } from "@/lib/contacts";
 
 export function Footer({ categories, site }: { categories: Category[]; site: Site }) {
   const phone = site.whatsapp.replace(/^598/, "0");
@@ -34,13 +35,23 @@ export function Footer({ categories, site }: { categories: Category[]; site: Sit
         <div>
           <h2 className="eyebrow">Contacto</h2>
           <a
-            href={whatsappUrl(site.whatsapp, "Hola, quiero consultar por equipos Calibra.")}
+            href={whatsappUrl(site.whatsapp, DEFAULT_MESSAGE)}
             target="_blank"
             rel="noopener"
             className="mt-4 inline-flex items-center gap-2 text-sm text-white hover:text-orange"
           >
-            <WhatsAppIcon className="h-4 w-4 text-[#25d366]" /> {phone}
+            <WhatsAppIcon className="h-4 w-4 text-orange" /> {formatPhone(phone)}
           </a>
+          <ul className="mt-4 space-y-2.5">
+            {LOCATIONS.map((l) => (
+              <li key={l.slug} className="text-sm text-fog">
+                <span className="font-semibold text-white">{l.name}</span> · {l.address.replace(/, Montevideo$/, "")}
+              </li>
+            ))}
+          </ul>
+          <Link href="/contacto" className="mono mt-4 inline-block text-xs font-semibold uppercase tracking-[0.16em] text-orange hover:text-white">
+            Vendedores y mapas →
+          </Link>
           <a
             href={site.launchUrl}
             target="_blank"

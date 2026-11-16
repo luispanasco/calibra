@@ -24,6 +24,12 @@ export function Header({ categories, site }: { categories: Category[]; site: Sit
               {c.title}
             </Link>
           ))}
+          <Link
+            href="/contacto"
+            className="mono border-l border-white/10 pl-7 text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-fog transition-colors hover:text-white"
+          >
+            Contacto
+          </Link>
         </nav>
 
         <div className="ml-auto flex items-center gap-3">
@@ -50,6 +56,9 @@ export function Header({ categories, site }: { categories: Category[]; site: Sit
               {c.title}
             </Link>
           ))}
+          <Link href="/contacto" className="mono shrink-0 text-xs font-semibold uppercase tracking-[0.14em] text-fog">
+            Contacto
+          </Link>
           <a href={site.launchUrl} target="_blank" rel="noopener" className="ml-auto shrink-0 border-l border-white/10 pl-5">
             <LaunchWordmark className="text-sm" />
           </a>
