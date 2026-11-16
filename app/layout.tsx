@@ -15,11 +15,11 @@ const barlow = Barlow({ variable: "--font-barlow", subsets: ["latin"], weight: [
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Calibra | Elevadores, desmontadoras y balanceadoras para el taller",
+    default: "Calibra | Elevadores, desenllantadoras y balanceadoras para el taller",
     template: "%s | Calibra",
   },
   description:
-    "Maquinaria pesada y precisa para el taller: elevadores tijera, desmontadoras de neumáticos y balanceadoras Calibra, para auto y camión.",
+    "Maquinaria pesada y precisa para el taller: elevadores tijera, desenllantadoras de neumáticos y balanceadoras Calibra, para auto y camión.",
   openGraph: { siteName: "Calibra", locale: "es_UY", type: "website", images: ["/brand/calibra-logo-c.png"] },
 };
 

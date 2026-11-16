@@ -74,7 +74,7 @@ export default async function HomePage() {
             <p className="eyebrow">La línea</p>
             <h2 className="display mt-3 text-[clamp(2.2rem,5vw,4rem)] text-white">Tres frentes del taller</h2>
           </div>
-          <p className="max-w-sm text-fog">Levantar, desmontar y balancear: los equipos que más trabajan, con la robustez que piden todos los días.</p>
+          <p className="max-w-sm text-fog">Levantar, desenllantar y balancear: los equipos que más trabajan, con la robustez que piden todos los días.</p>
         </div>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3">

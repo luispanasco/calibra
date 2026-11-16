@@ -1,6 +1,6 @@
 # Calibra — web
 
-Sitio de la marca **Calibra** (elevadores, desmontadoras y balanceadoras). Next.js 16 + Tailwind 4.
+Sitio de la marca **Calibra** (elevadores, desenllantadoras y balanceadoras). Next.js 16 + Tailwind 4.
 
 - **Datos**: tablas `cb_category` / `cb_product` / `cb_singleton` del proyecto Supabase web (el mismo de launchweb), solo lectura con la anon key + RLS (solo lo activo). SQL en `hub-nami/prisma/web/alter_calibra.sql`.
 - **Edición**: en el hub, Admin → Web → **Web Calibra** (`/calibra`): fichas, fotos, categorías, WhatsApp y textos del hero.

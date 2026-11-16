@@ -9,7 +9,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "Locales y vendedores de Calibra en Montevideo. Consultas de venta y servicio técnico de elevadores, desmontadoras y balanceadoras por WhatsApp.",
+    "Locales y vendedores de Calibra en Montevideo. Consultas de venta y servicio técnico de elevadores, desenllantadoras y balanceadoras por WhatsApp.",
   alternates: { canonical: "/contacto" },
 };
 

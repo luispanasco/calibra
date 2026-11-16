@@ -15,7 +15,7 @@ export function Footer({ categories, site }: { categories: Category[]; site: Sit
         <div>
           <Image src="/brand/calibra-logo-c.png" alt="Calibra" width={1600} height={529} className="h-12 w-auto" />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-fog">
-            Elevadores, desmontadoras y balanceadoras para talleres, gomerías y flotas. Equipos pesados, medidos al detalle.
+            Elevadores, desenllantadoras y balanceadoras para talleres, gomerías y flotas. Equipos pesados, medidos al detalle.
           </p>
         </div>
 

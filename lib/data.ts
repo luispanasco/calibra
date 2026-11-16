@@ -51,7 +51,7 @@ export type Site = {
 
 export const DEFAULT_SITE: Site = {
   whatsapp: "59898155763",
-  heroTitle: "Elevadores, desmontadoras y balanceadoras",
+  heroTitle: "Elevadores, desenllantadoras y balanceadoras",
   heroSubtitle: "Equipos pesados y precisos para el taller que trabaja en serio: levantan toneladas y miden gramos.",
   launchUrl: "https://www.launchuruguay.com.uy",
 };
