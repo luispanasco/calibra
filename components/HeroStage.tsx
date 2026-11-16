@@ -84,11 +84,11 @@ export function HeroStage({
         </div>
       ))}
 
-      <div className="container-cb grid min-h-[min(calc(100svh-4rem),1000px)] items-center gap-4 py-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.5fr)] lg:py-0">
+      <div className="container-cb grid min-h-[min(calc(100svh-4rem),1000px)] items-center gap-4 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-10 lg:py-0">
         <div className="relative z-10 order-2 lg:order-1">
           <p className="eyebrow">Maquinaria de taller · Auto y camión</p>
-          <h1 className="display mt-4 text-[clamp(1.6rem,2.3vw,2.3rem)] !leading-[1.08] text-white">{title}</h1>
-          <p className="mt-5 max-w-md text-lg leading-relaxed text-fog">{subtitle}</p>
+          <h1 className="display mt-4 text-[clamp(2.1rem,3.2vw,2.9rem)] !leading-[1.02] text-white">{title}</h1>
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-fog lg:text-xl">{subtitle}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href={quoteUrl} target="_blank" rel="noopener" className="btn btn-primary">
               <WhatsAppIcon className="h-4 w-4" /> Pedir cotización
@@ -100,8 +100,8 @@ export function HeroStage({
         </div>
 
         {s && (
-          <div className="relative order-1 lg:order-2 lg:-mr-10 xl:-mr-20">
-            <div className="relative mx-auto h-[min(58vw,420px)] w-full sm:h-[min(56vw,560px)] lg:h-[min(66svh,720px)]">
+          <div className="relative order-1 lg:order-2">
+            <div className="relative mx-auto h-[min(58vw,420px)] w-full sm:h-[min(56vw,560px)] lg:h-[min(58svh,600px)]">
               <div className="laser" aria-hidden />
               {slides.map((sl, n) => (
                 <div
