@@ -13,10 +13,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contacto" },
 };
 
-// Los mapas de Google no se pueden estilar: se oscurecen con un filtro para que
-// queden en la paleta grafito del sitio (invertido + sin color + contraste).
-const MAP_FILTER = "invert(0.92) hue-rotate(180deg) grayscale(0.85) contrast(0.92) brightness(0.95)";
-
 export default async function ContactPage() {
   const site = await getSite();
   return (
@@ -81,10 +77,7 @@ export default async function ContactPage() {
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
                 className="absolute inset-0 h-full w-full border-0"
-                style={{ filter: MAP_FILTER }}
               />
-              {/* Velo naranja muy suave para que el mapa tome el tono de la marca. */}
-              <div aria-hidden className="pointer-events-none absolute inset-0 bg-orange/[0.06] mix-blend-color" />
             </div>
             <ul className="divide-y divide-white/[0.06]">
               {loc.sellers.map((s) => (
