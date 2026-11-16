@@ -2,7 +2,8 @@ import Image from "next/image";
 
 /**
  * Máquina sin fondo sobre el escenario: cono de luz, piso iluminado y reflejo.
- * `sizes` según dónde se use (card chica vs. hero).
+ * `sizes` según dónde se use (card chica vs. hero). `align`: "bottom" apoya la
+ * máquina en el piso (hero, ficha); "center" la centra en su caja (cards).
  */
 export function Machine({
   src,
@@ -10,6 +11,7 @@ export function Machine({
   sizes,
   priority,
   reflection = true,
+  align = "bottom",
   className = "",
 }: {
   src: string;
@@ -17,6 +19,7 @@ export function Machine({
   sizes: string;
   priority?: boolean;
   reflection?: boolean;
+  align?: "bottom" | "center";
   className?: string;
 }) {
   if (!src) {
@@ -29,7 +32,7 @@ export function Machine({
   return (
     <div className={`stage ${className}`}>
       <div className="relative h-full w-full">
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="machine object-contain object-bottom" />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={`machine object-contain ${align === "center" ? "object-center" : "object-bottom"}`} />
       </div>
       {reflection && (
         <div className="absolute inset-x-0 top-full h-1/3 overflow-hidden" aria-hidden>
