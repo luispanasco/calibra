@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow, Saira } from "next/font/google";
+import { Barlow, Saira, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -8,6 +8,8 @@ import { getCategories, getSite } from "@/lib/data";
 import { SITE_URL } from "@/lib/links";
 
 const saira = Saira({ variable: "--font-saira", subsets: ["latin"], axes: ["wdth"] });
+// Tipografía de Launch Uruguay, solo para su wordmark en las referencias cruzadas.
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], weight: ["400", "700"] });
 const barlow = Barlow({ variable: "--font-barlow", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export const viewport: Viewport = { themeColor: "#0a0b0d" };
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [categories, site] = await Promise.all([getCategories(), getSite()]);
   return (
-    <html lang="es-UY" className={`${saira.variable} ${barlow.variable}`}>
+    <html lang="es-UY" className={`${saira.variable} ${barlow.variable} ${spaceGrotesk.variable}`}>
       <body className="flex min-h-dvh flex-col antialiased">
         <a
           href="#contenido"

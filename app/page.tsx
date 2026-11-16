@@ -3,6 +3,7 @@ import { HeroStage, type HeroSlide } from "@/components/HeroStage";
 import { Machine } from "@/components/Machine";
 import { ProductCard } from "@/components/ProductCard";
 import { ArrowRight, ArrowUpRight, WhatsAppIcon } from "@/components/Icons";
+import { LaunchWordmark } from "@/components/LaunchWordmark";
 import { categoryImage, getCategories, getProducts, getSite } from "@/lib/data";
 import { productUrl, whatsappUrl } from "@/lib/links";
 
@@ -141,6 +142,38 @@ export default async function HomePage() {
         {products.length === 0 && <p className="mt-10 text-fog">Estamos cargando los equipos. Mientras tanto, consultanos por WhatsApp.</p>}
       </section>
 
+      {/* Referencia cruzada a Launch Uruguay, con su identidad (Space Grotesk + rojo). */}
+      <section className="relative mt-28 overflow-hidden border-y border-launch/30 bg-[#0d0708]">
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 45% 90% at 85% 50%, rgb(223 29 48 / 0.28), transparent 70%), radial-gradient(ellipse 30% 60% at 10% 100%, rgb(223 29 48 / 0.12), transparent 70%)",
+          }}
+        />
+        <div aria-hidden className="absolute inset-y-0 left-0 w-1.5 bg-launch" />
+        <a
+          href={site.launchUrl}
+          target="_blank"
+          rel="noopener"
+          className="group container-cb relative grid items-center gap-8 py-16 lg:grid-cols-[1.5fr_1fr] lg:py-20"
+        >
+          <div className="reveal">
+            <p className="font-launch text-sm font-bold uppercase tracking-[0.2em] text-launch">También de nuestro equipo</p>
+            <LaunchWordmark className="mt-4 text-[clamp(2.6rem,8vw,6.5rem)]" />
+            <p className="mt-5 max-w-xl font-launch text-lg text-fog">
+              Scanners, diagnóstico y equipamiento automotriz. Completá el taller con la otra mitad: el diagnóstico.
+            </p>
+          </div>
+          <div className="reveal lg:justify-self-end">
+            <span className="inline-flex items-center gap-3 bg-launch px-7 py-4 font-launch text-base font-bold uppercase tracking-wide text-white shadow-[0_0_40px_-6px_rgb(223_29_48/0.7)] transition-colors group-hover:bg-[#f0283c]">
+              Visitar Launch Uruguay <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </span>
+          </div>
+        </a>
+      </section>
+
       {/* Cierre */}
       <section className="container-cb pt-28">
         <div className="reveal relative overflow-hidden border border-white/10 bg-gradient-to-br from-panel to-ink p-8 sm:p-14">
@@ -161,9 +194,6 @@ export default async function HomePage() {
             <div className="flex flex-wrap gap-3 lg:justify-end">
               <a href={quote} target="_blank" rel="noopener" className="btn btn-primary">
                 <WhatsAppIcon className="h-4 w-4" /> Pedir cotización
-              </a>
-              <a href={site.launchUrl} target="_blank" rel="noopener" className="btn btn-ghost">
-                Launch Uruguay <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
           </div>

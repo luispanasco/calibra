@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Category, Site } from "@/lib/data";
 import { whatsappUrl } from "@/lib/links";
 import { ArrowUpRight, WhatsAppIcon } from "./Icons";
+import { LaunchWordmark } from "./LaunchWordmark";
 
 export function Header({ categories, site }: { categories: Category[]; site: Site }) {
   const quote = whatsappUrl(site.whatsapp, "Hola, quiero cotizar equipos Calibra.");
@@ -30,9 +31,10 @@ export function Header({ categories, site }: { categories: Category[]; site: Sit
             href={site.launchUrl}
             target="_blank"
             rel="noopener"
-            className="hidden items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-fog transition-colors hover:text-white lg:inline-flex"
+            className="group hidden items-center gap-2 border border-launch/40 bg-launch/[0.07] px-3.5 py-2 shadow-[0_0_24px_-8px_rgb(223_29_48/0.6)] transition-colors hover:border-launch hover:bg-launch/15 lg:inline-flex"
           >
-            Launch Uruguay <ArrowUpRight className="h-3.5 w-3.5" />
+            <LaunchWordmark className="text-lg" />
+            <ArrowUpRight className="h-4 w-4 text-launch transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
           <a href={quote} target="_blank" rel="noopener" className="btn btn-primary !px-4 !py-2.5 !text-[0.72rem]">
             <WhatsAppIcon className="h-4 w-4" /> Cotizar
@@ -48,6 +50,9 @@ export function Header({ categories, site }: { categories: Category[]; site: Sit
               {c.title}
             </Link>
           ))}
+          <a href={site.launchUrl} target="_blank" rel="noopener" className="ml-auto shrink-0 border-l border-white/10 pl-5">
+            <LaunchWordmark className="text-sm" />
+          </a>
         </div>
       </nav>
     </header>

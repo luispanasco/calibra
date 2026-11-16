@@ -12,6 +12,8 @@
   --cb-orange: #f8772f;
   --cb-red: #e51e20;
   --cb-line: rgb(255 255 255 / 0.08);
+  /* Rojo de Launch Uruguay (launchweb --brand-primary), solo para las referencias cruzadas. */
+  --launch-red: #df1d30;
 }
 
 @theme inline {
@@ -24,8 +26,10 @@
   --color-white: var(--cb-white);
   --color-orange: var(--cb-orange);
   --color-red: var(--cb-red);
+  --color-launch: var(--launch-red);
   --font-display: var(--font-saira), "Arial Narrow", sans-serif;
   --font-sans: var(--font-barlow), system-ui, sans-serif;
+  --font-launch: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
 html {

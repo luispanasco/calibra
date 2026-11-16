@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Category, Site } from "@/lib/data";
 import { whatsappUrl } from "@/lib/links";
 import { ArrowUpRight, WhatsAppIcon } from "./Icons";
+import { LaunchWordmark } from "./LaunchWordmark";
 
 export function Footer({ categories, site }: { categories: Category[]; site: Site }) {
   const phone = site.whatsapp.replace(/^598/, "0");
@@ -40,18 +41,19 @@ export function Footer({ categories, site }: { categories: Category[]; site: Sit
           >
             <WhatsAppIcon className="h-4 w-4 text-[#25d366]" /> {phone}
           </a>
-          <div className="mt-8 border border-white/10 p-4">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-grey">También de nuestro equipo</p>
-            <a
-              href={site.launchUrl}
-              target="_blank"
-              rel="noopener"
-              className="mt-1.5 inline-flex items-center gap-1.5 font-semibold text-white hover:text-orange"
-            >
-              Launch Uruguay <ArrowUpRight className="h-4 w-4" />
-            </a>
-            <p className="mt-1 text-xs text-fog">Scanners, diagnóstico y equipamiento automotriz.</p>
-          </div>
+          <a
+            href={site.launchUrl}
+            target="_blank"
+            rel="noopener"
+            className="group mt-8 block border border-launch/40 bg-launch/[0.06] p-5 transition-colors hover:border-launch hover:bg-launch/10"
+          >
+            <p className="font-launch text-[0.7rem] font-bold uppercase tracking-[0.18em] text-launch">También de nuestro equipo</p>
+            <span className="mt-2 flex items-center gap-2">
+              <LaunchWordmark className="text-2xl" />
+              <ArrowUpRight className="h-5 w-5 text-launch transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </span>
+            <p className="mt-2 font-launch text-sm text-fog">Scanners, diagnóstico y equipamiento automotriz.</p>
+          </a>
         </div>
       </div>
       <div className="border-t border-white/[0.06]">
