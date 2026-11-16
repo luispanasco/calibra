@@ -52,7 +52,6 @@ export function HeroStage({
   }, []);
 
   const s = slides[i];
-  const words = title.split(" ");
 
   return (
     <section
@@ -72,22 +71,25 @@ export function HeroStage({
         }}
       />
       <div aria-hidden className="tech-grid pointer-events-none absolute inset-0 -z-10 opacity-60" />
-      <div
-        aria-hidden
-        className="display outline-text pointer-events-none absolute -bottom-[0.12em] left-1/2 -z-10 -translate-x-1/2 whitespace-nowrap text-[26vw] leading-none"
-      >
-        Calibra
-      </div>
+      {/* El modelo actual, gigante y calado detrás de la máquina: el título del hero es la máquina. */}
+      {slides.map((sl, n) => (
+        <div
+          key={sl.slug}
+          aria-hidden
+          className={`display outline-text pointer-events-none absolute right-[-0.04em] top-[8%] -z-10 whitespace-nowrap text-[clamp(6rem,19vw,22rem)] leading-none transition-opacity duration-1000 ${
+            n === i ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {sl.model}
+        </div>
+      ))}
 
-      <div className="container-cb grid min-h-[min(calc(100svh-4rem),980px)] items-center gap-6 py-12 lg:grid-cols-[1fr_1.15fr] lg:py-0">
-        <div className="relative z-10">
+      <div className="container-cb grid min-h-[min(calc(100svh-4rem),1000px)] items-center gap-4 py-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.5fr)] lg:py-0">
+        <div className="relative z-10 order-2 lg:order-1">
           <p className="eyebrow">Maquinaria de taller · Auto y camión</p>
-          <h1 className="display mt-5 text-[clamp(3rem,9vw,7.5rem)]">
-            {words.length > 1 && <span className="metal block">{words.slice(0, -1).join(" ")}</span>}
-            <span className="block text-orange">{words[words.length - 1]}</span>
-          </h1>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-fog">{subtitle}</p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <h1 className="display mt-4 text-[clamp(1.6rem,2.3vw,2.3rem)] !leading-[1.08] text-white">{title}</h1>
+          <p className="mt-5 max-w-md text-lg leading-relaxed text-fog">{subtitle}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
             <a href={quoteUrl} target="_blank" rel="noopener" className="btn btn-primary">
               <WhatsAppIcon className="h-4 w-4" /> Pedir cotización
             </a>
@@ -98,24 +100,24 @@ export function HeroStage({
         </div>
 
         {s && (
-          <div className="relative">
-            <div className="relative mx-auto aspect-[5/4] w-full max-w-[720px]">
+          <div className="relative order-1 lg:order-2 lg:-mr-10 xl:-mr-20">
+            <div className="relative mx-auto h-[min(58vw,420px)] w-full sm:h-[min(56vw,560px)] lg:h-[min(66svh,720px)]">
               <div className="laser" aria-hidden />
               {slides.map((sl, n) => (
                 <div
                   key={sl.slug}
                   aria-hidden={n !== i}
-                  className={`absolute inset-x-0 bottom-[16%] top-0 transition-all duration-1000 ease-out ${
-                    n === i ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-8 opacity-0"
+                  className={`absolute inset-x-0 bottom-[12%] top-0 transition-all duration-1000 ease-out ${
+                    n === i ? "translate-x-0 scale-100 opacity-100" : "pointer-events-none translate-x-10 scale-[0.97] opacity-0"
                   }`}
                 >
-                  <Machine src={sl.image} alt={`Calibra ${sl.model}`} sizes="(min-width:1024px) 720px, 100vw" priority={n === 0} className="h-full" />
+                  <Machine src={sl.image} alt={`Calibra ${sl.model}`} sizes="(min-width:1024px) 1000px, 100vw" priority={n === 0} className="h-full" />
                 </div>
               ))}
             </div>
 
             {/* Lectura de la máquina actual, como un instrumento. */}
-            <div className="relative -mt-4 border border-white/10 bg-graphite/70 backdrop-blur-md">
+            <div className="relative mx-auto -mt-2 max-w-[760px] border border-white/10 bg-graphite/70 backdrop-blur-md">
               <div className="flex items-baseline justify-between gap-4 border-b border-white/10 px-5 py-3">
                 <Link href={s.url} className="group min-w-0">
                   <span className="mono block text-[0.7rem] uppercase tracking-[0.2em] text-orange">{s.category}</span>
@@ -134,14 +136,14 @@ export function HeroStage({
                 ))}
               </dl>
               {slides.length > 1 && (
-                <div className="flex border-t border-white/10" role="tablist" aria-label="Equipos destacados">
+                <div className="flex overflow-x-auto border-t border-white/10 [scrollbar-width:none]" role="tablist" aria-label="Equipos destacados">
                   {slides.map((sl, n) => (
                     <button
                       key={sl.slug}
                       role="tab"
                       aria-selected={n === i}
                       onClick={() => setI(n)}
-                      className="group relative flex-1 px-2 py-2.5 text-center"
+                      className="group relative flex-1 shrink-0 whitespace-nowrap px-3 py-2.5 text-center"
                     >
                       <span className={`mono text-[0.65rem] uppercase tracking-[0.12em] ${n === i ? "text-white" : "text-grey group-hover:text-fog"}`}>
                         {sl.model}

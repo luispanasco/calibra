@@ -51,9 +51,8 @@ export type Site = {
 
 export const DEFAULT_SITE: Site = {
   whatsapp: "59898155763",
-  heroTitle: "Fuerza que se mide",
-  heroSubtitle:
-    "Elevadores, desmontadoras y balanceadoras para el taller que trabaja en serio. Construidas para levantar toneladas y medir gramos.",
+  heroTitle: "Elevadores, desmontadoras y balanceadoras",
+  heroSubtitle: "Equipos pesados y precisos para el taller que trabaja en serio: levantan toneladas y miden gramos.",
   launchUrl: "https://www.launchuruguay.com.uy",
 };
 
