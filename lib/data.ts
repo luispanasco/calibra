@@ -33,6 +33,8 @@ export type Product = {
   order: number;
   heroSpecs: Pair[];
   heroHighlights: string[];
+  /** Para qué es el equipo (etiquetas múltiples: "Run-flat", "Camión"…). */
+  uses: string[];
   features: string[];
   specs: Pair[];
   extraSections: ExtraSection[];
@@ -113,6 +115,7 @@ function mapProduct(r: any): Product {
     order: typeof r.order === "number" ? r.order : 999,
     heroSpecs: pairs(r.hero_specs),
     heroHighlights: Array.isArray(r.hero_highlights) ? r.hero_highlights.map(str).filter(Boolean) : [],
+    uses: Array.isArray(r.uses) ? r.uses.map(str).filter(Boolean) : [],
     features,
     specs,
     extraSections,

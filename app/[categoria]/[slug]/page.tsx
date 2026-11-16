@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
 import { ProductCard } from "@/components/ProductCard";
+import { UseTags } from "@/components/UseTags";
 import { WhatsAppIcon } from "@/components/Icons";
 import { getCategory, getProduct, getProducts, getProductsByCategory, getSite } from "@/lib/data";
 import { quoteText, whatsappUrl } from "@/lib/links";
@@ -59,6 +60,7 @@ export default async function ProductPage({ params }: Props) {
             </nav>
             <p className="eyebrow mt-8">{p.title}</p>
             <h1 className="display metal mt-3 whitespace-nowrap text-[clamp(2.4rem,11vw,5.2rem)] lg:text-[clamp(3rem,5.4vw,5.2rem)]">{p.model}</h1>
+            <UseTags uses={p.uses} size="md" className="mt-5" />
             {p.shortDescription && <p className="mt-5 max-w-lg text-lg leading-relaxed text-fog">{p.shortDescription}</p>}
 
             {p.heroHighlights.length > 0 && (

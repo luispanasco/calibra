@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Product } from "@/lib/data";
 import { productUrl } from "@/lib/links";
 import { Machine } from "./Machine";
+import { UseTags } from "./UseTags";
 
 export function ProductCard({ p, categoryTitle }: { p: Product; categoryTitle?: string }) {
   return (
@@ -33,8 +34,11 @@ export function ProductCard({ p, categoryTitle }: { p: Product; categoryTitle?: 
         <span className="mono text-[0.68rem] uppercase tracking-[0.2em] text-orange">{categoryTitle ?? p.title}</span>
         <h3 className="display mt-1.5 text-2xl text-white">{p.model}</h3>
         {categoryTitle && <p className="mt-1 text-sm font-medium text-fog">{p.title}</p>}
+        <UseTags uses={p.uses} className="mt-3" />
+        {/* Empuja las cifras al pie: quedan alineadas entre cards aunque cambie la cantidad de usos. */}
+        <div className="min-h-4 flex-1" aria-hidden />
         {p.heroSpecs.length > 0 && (
-          <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-dashed border-white/10 pt-4">
+          <dl className="grid grid-cols-2 gap-x-4 gap-y-2 border-t border-dashed border-white/10 pt-4">
             {p.heroSpecs.slice(0, 2).map((s) => (
               <div key={s.label}>
                 <dt className="text-[0.62rem] uppercase tracking-[0.14em] text-grey">{s.label}</dt>
