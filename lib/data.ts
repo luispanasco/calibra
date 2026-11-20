@@ -165,6 +165,27 @@ export async function getProduct(categorySlug: string, slug: string): Promise<Pr
   return (await getProducts()).find((p) => p.slug === slug && p.categorySlug === categorySlug) ?? null;
 }
 
+/**
+ * Ruta de la ficha publicada para un código ERP (cb_product.product_code), sin
+ * distinguir mayúsculas. null si no hay ficha visible (oculta o de categoría oculta).
+ * La usa /go/{código}: los links de las cotizaciones y los QR.
+ */
+export async function getProductPathForCode(code: string): Promise<string | null> {
+  const sb = getSupabase();
+  const c = code.trim();
+  if (!sb || !c) return null;
+  const pattern = c.replace(/[\\%_]/g, (m) => `\\${m}`);
+  const { data, error } = await sb.from("cb_product").select("slug, category_slug").ilike("product_code", pattern).limit(1);
+  if (error) {
+    console.error("cb_product por código", error.message);
+    return null;
+  }
+  const row = data?.[0] as { slug: string; category_slug: string } | undefined;
+  if (!row) return null;
+  if (!(await getCategories()).some((cat) => cat.slug === row.category_slug)) return null;
+  return `/${row.category_slug}/${row.slug}`;
+}
+
 export async function getProductsByCategory(slug: string): Promise<Product[]> {
   return (await getProducts()).filter((p) => p.categorySlug === slug);
 }
