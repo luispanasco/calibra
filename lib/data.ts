@@ -25,6 +25,8 @@ export type ExtraSection = { id: string; title: string; items: Pair[]; text: str
 export type Product = {
   slug: string;
   model: string;
+  /** Código ERP (na_he). "" si todavía no tiene: sin código no hay link de compra. */
+  productCode: string;
   categorySlug: string;
   title: string;
   shortDescription: string;
@@ -107,6 +109,7 @@ function mapProduct(r: any): Product {
   return {
     slug: r.slug,
     model: str(r.model),
+    productCode: str(r.product_code),
     categorySlug: r.category_slug,
     title: str(r.title),
     shortDescription: str(r.short_description),

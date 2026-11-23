@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
 import { ProductCard } from "@/components/ProductCard";
 import { UseTags } from "@/components/UseTags";
-import { WhatsAppIcon } from "@/components/Icons";
+import { CartIcon, WhatsAppIcon } from "@/components/Icons";
 import { getCategory, getProduct, getProducts, getProductsByCategory, getSite } from "@/lib/data";
-import { quoteText, whatsappUrl } from "@/lib/links";
+import { namiStoreUrl, quoteText, whatsappUrl } from "@/lib/links";
 
 export const revalidate = 300;
 
@@ -34,6 +34,7 @@ export default async function ProductPage({ params }: Props) {
   if (!p || !cat) notFound();
   const related = (await getProductsByCategory(cat.slug)).filter((x) => x.slug !== p.slug).slice(0, 3);
   const quote = whatsappUrl(site.whatsapp, quoteText(p));
+  const buy = namiStoreUrl(p.productCode);
 
   return (
     <>
@@ -75,6 +76,11 @@ export default async function ProductPage({ params }: Props) {
               <a href={quote} target="_blank" rel="noopener" className="btn btn-primary">
                 <WhatsAppIcon className="h-4 w-4" /> Pedir cotización
               </a>
+              {buy && (
+                <a href={buy} target="_blank" rel="noopener" className="btn btn-ghost">
+                  <CartIcon className="h-4 w-4" /> Comprar en Nami
+                </a>
+              )}
               <a href="#ficha" className="btn btn-ghost">Ficha técnica</a>
             </div>
           </div>
@@ -159,11 +165,22 @@ export default async function ProductPage({ params }: Props) {
         <div className="reveal flex flex-col items-start justify-between gap-6 border border-orange/30 bg-gradient-to-r from-orange/10 to-transparent p-8 sm:flex-row sm:items-center">
           <div>
             <p className="display text-2xl text-white">¿La {p.model} es para tu taller?</p>
-            <p className="mt-1 text-fog">Te pasamos precio, disponibilidad y plazo de entrega por WhatsApp.</p>
+            <p className="mt-1 text-fog">
+              {buy
+                ? "Comprala en la tienda Nami, o pedinos precio, disponibilidad y plazo de entrega por WhatsApp."
+                : "Te pasamos precio, disponibilidad y plazo de entrega por WhatsApp."}
+            </p>
           </div>
-          <a href={quote} target="_blank" rel="noopener" className="btn btn-primary shrink-0">
-            <WhatsAppIcon className="h-4 w-4" /> Pedir cotización
-          </a>
+          <div className="flex shrink-0 flex-wrap gap-3">
+            <a href={quote} target="_blank" rel="noopener" className="btn btn-primary">
+              <WhatsAppIcon className="h-4 w-4" /> Pedir cotización
+            </a>
+            {buy && (
+              <a href={buy} target="_blank" rel="noopener" className="btn btn-ghost">
+                <CartIcon className="h-4 w-4" /> Comprar en Nami
+              </a>
+            )}
+          </div>
         </div>
       </section>
 
