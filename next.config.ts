@@ -15,6 +15,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return {
+      // Slugs viejos (modelo de fábrica, sin el prefijo "sca" del código Nami) →
+      // route handler que responde un 308 real. Desde la página el redirect de un
+      // slug no prerenderizado sale como 200 + salto por JS, que no le sirve a Google.
+      beforeFiles: [
+        {
+          source: "/:categoria((?!go$|api$|redir$|_next$)[a-z-]+)/:slug((?!sca|comparar$)[a-z0-9-]+)",
+          destination: "/redir/:categoria/:slug",
+        },
+      ],
+    };
+  },
 };
 
 export default nextConfig;
