@@ -368,3 +368,15 @@ body {
     display: none;
   }
 }
+
+/* Anuncio del comparador: la fila que difiere "late" para llamar la atención. */
+@keyframes cmp-ann-pulse {
+  0%, 100% { background-color: rgb(248 119 47 / 0.06); }
+  50% { background-color: rgb(248 119 47 / 0.2); }
+}
+.cmp-ann-pulse {
+  animation: cmp-ann-pulse 1.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmp-ann-pulse { animation: none; }
+}

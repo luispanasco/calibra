@@ -115,19 +115,19 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
                 aria-pressed={on}
                 disabled={full}
                 onClick={() => toggle(i.slug)}
-                className={`group flex items-center gap-3 border p-2.5 text-left transition-colors ${
+                className={`group flex items-start gap-3 border p-2.5 text-left transition-colors ${
                   on ? "border-orange bg-orange/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
                 } disabled:cursor-not-allowed disabled:opacity-40`}
               >
                 <span
                   aria-hidden
-                  className={`grid h-4 w-4 shrink-0 place-items-center border ${on ? "border-orange bg-orange" : "border-white/30"}`}
+                  className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center border ${on ? "border-orange bg-orange" : "border-white/30"}`}
                 >
                   {on && <span className="h-1.5 w-1.5 rotate-45 bg-ink" />}
                 </span>
                 <span className="min-w-0">
                   <span className="display block truncate text-sm text-white">{i.model}</span>
-                  <span className="block truncate text-xs text-fog">{i.title}</span>
+                  <span className="line-clamp-2 block text-xs leading-snug text-fog">{i.title}</span>
                 </span>
               </button>
             );
@@ -160,6 +160,11 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
         </label>
       </div>
 
+      {n > 2 && (
+        <p className="mono mt-5 flex items-center justify-end gap-2 text-[0.68rem] uppercase tracking-[0.16em] text-grey lg:hidden" aria-hidden>
+          Deslizá para ver los {n} <span className="text-orange">→</span>
+        </p>
+      )}
       <div className="-mx-4 mt-6 overflow-x-auto px-4 sm:mx-0 sm:px-0">
         <table className="w-full table-fixed border-collapse" style={{ minWidth }}>
           <caption className="sr-only">Comparación de {cols.map((c) => c.model).join(", ")}</caption>

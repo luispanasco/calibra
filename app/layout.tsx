@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { CompareAnnouncement } from "@/components/CompareAnnouncement";
 import { getCategories, getSite } from "@/lib/data";
 import { SITE_URL } from "@/lib/links";
 
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </main>
         <Footer categories={categories} site={site} />
         <WhatsAppFab phone={site.whatsapp} />
+        <CompareAnnouncement categories={categories.map((c) => ({ slug: c.slug, title: c.title }))} />
       </body>
     </html>
   );
