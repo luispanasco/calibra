@@ -84,10 +84,11 @@ export function HeroStage({
         </div>
       ))}
 
-      <div className="container-cb grid min-h-[min(calc(100svh-4rem),1000px)] items-center gap-4 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-10 lg:py-0">
-        <div className="relative z-10 order-2 lg:order-1">
+      {/* grid-cols-[minmax(0,1fr)]: sin esto la columna crece al ancho de la tira de modelos y desborda en celular */}
+      <div className="container-cb grid min-h-[min(calc(100svh-4rem),1000px)] grid-cols-[minmax(0,1fr)] items-center gap-4 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-10 lg:py-0">
+        <div className="relative z-10 order-2 min-w-0 lg:order-1">
           <p className="eyebrow">Maquinaria de taller · Auto y camión</p>
-          <h1 className="display mt-4 text-[clamp(2.1rem,3.2vw,2.9rem)] !leading-[1.02] text-white">{title}</h1>
+          <h1 className="display mt-4 text-[clamp(1.5rem,6.9vw,2.9rem)] !leading-[1.02] text-white [hyphens:auto] lg:text-[clamp(2.1rem,3.2vw,2.9rem)]">{title}</h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-fog lg:text-xl">{subtitle}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href={quoteUrl} target="_blank" rel="noopener" className="btn btn-primary">
@@ -100,7 +101,7 @@ export function HeroStage({
         </div>
 
         {s && (
-          <div className="relative order-1 lg:order-2">
+          <div className="relative order-1 min-w-0 lg:order-2">
             <div className="relative mx-auto h-[min(58vw,420px)] w-full sm:h-[min(56vw,560px)] lg:h-[min(58svh,600px)]">
               <div className="laser" aria-hidden />
               {slides.map((sl, n) => (

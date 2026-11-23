@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }: Props) {
             <p className="eyebrow">
               {products.length} {products.length === 1 ? "modelo" : "modelos"}
             </p>
-            <h1 className="display metal mt-4 whitespace-nowrap" style={{ fontSize: fitTitle(cat.title) }}>
+            <h1 className="display metal mt-4 whitespace-nowrap" style={{ fontSize: fitTitle(cat.title, "5.4rem", "1.4rem") }}>
               {cat.title}
             </h1>
             {cat.shortDescription && <p className="mt-5 max-w-xl text-lg text-fog">{cat.shortDescription}</p>}

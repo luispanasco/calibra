@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { fitTitle } from "@/lib/fit";
 import { HeroStage, type HeroSlide } from "@/components/HeroStage";
 import { Machine } from "@/components/Machine";
 import { ProductCard } from "@/components/ProductCard";
@@ -84,7 +85,7 @@ export default async function HomePage() {
               <Link
                 key={c.slug}
                 href={`/${c.slug}`}
-                className="reveal corners group relative flex min-h-[460px] flex-col overflow-hidden border border-white/[0.07] bg-gradient-to-b from-panel via-graphite to-ink p-7"
+                className="reveal corners group @container relative flex min-h-[460px] flex-col overflow-hidden border border-white/[0.07] bg-gradient-to-b from-panel via-graphite to-ink p-7"
               >
                 <span className="display outline-text absolute -right-2 top-2 text-[7rem] leading-none" aria-hidden>
                   0{n + 1}
@@ -92,7 +93,9 @@ export default async function HomePage() {
                 <span className="mono text-xs uppercase tracking-[0.22em] text-orange">
                   {count} {count === 1 ? "modelo" : "modelos"}
                 </span>
-                <h3 className="display mt-2 text-4xl text-white">{c.title}</h3>
+                <h3 className="display mt-2 whitespace-nowrap text-white" style={{ fontSize: fitTitle(c.title, "2.25rem", "1.3rem") }}>
+                  {c.title}
+                </h3>
                 <p className="mt-3 max-w-xs text-sm leading-relaxed text-fog">{c.shortDescription}</p>
                 <div className="relative mt-auto h-56 transition-transform duration-700 ease-out group-hover:scale-105">
                   <Machine src={categoryImage(c, products)} alt={c.title} sizes="(min-width:1024px) 420px, 100vw" reflection={false} className="h-full" />
