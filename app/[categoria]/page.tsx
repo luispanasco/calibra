@@ -1,25 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
-import { WhatsAppIcon } from "@/components/Icons";
+import { CompareIcon, WhatsAppIcon } from "@/components/Icons";
 import { getCategories, getCategory, getProductsByCategory, getSite } from "@/lib/data";
 import Link from "next/link";
 import { CategoryStage, type StageSlide } from "@/components/CategoryStage";
 import { productUrl, whatsappUrl } from "@/lib/links";
+import { fitTitle } from "@/lib/fit";
 
 export const revalidate = 300;
 
 type Props = { params: Promise<{ categoria: string }> };
-
-/**
- * El título va en una sola línea y ocupa el ancho de su columna: el tamaño sale
- * de la cantidad de letras (~0,76 em por letra en Saira expandida, mayúsculas),
- * medido contra el ancho del contenedor (cqi). Tope de 5,4 rem para los cortos.
- */
-function titleSize(title: string): string {
-  const perChar = 100 / (Math.max(title.length, 6) * 0.76);
-  return `clamp(1.8rem, ${perChar.toFixed(2)}cqi, 5.4rem)`;
-}
 
 export async function generateStaticParams() {
   return (await getCategories()).map((c) => ({ categoria: c.slug }));
@@ -57,18 +48,25 @@ export default async function CategoryPage({ params }: Props) {
             <p className="eyebrow">
               {products.length} {products.length === 1 ? "modelo" : "modelos"}
             </p>
-            <h1 className="display metal mt-4 whitespace-nowrap" style={{ fontSize: titleSize(cat.title) }}>
+            <h1 className="display metal mt-4 whitespace-nowrap" style={{ fontSize: fitTitle(cat.title) }}>
               {cat.title}
             </h1>
             {cat.shortDescription && <p className="mt-5 max-w-xl text-lg text-fog">{cat.shortDescription}</p>}
-            <a
-              href={whatsappUrl(site.whatsapp, `Hola, quiero cotizar ${cat.title.toLowerCase()} Calibra.`)}
-              target="_blank"
-              rel="noopener"
-              className="btn btn-primary mt-8"
-            >
-              <WhatsAppIcon className="h-4 w-4" /> Consultar por {cat.title.toLowerCase()}
-            </a>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={whatsappUrl(site.whatsapp, `Hola, quiero cotizar ${cat.title.toLowerCase()} Calibra.`)}
+                target="_blank"
+                rel="noopener"
+                className="btn btn-primary"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> Consultar por {cat.title.toLowerCase()}
+              </a>
+              {products.length > 1 && (
+                <Link href={`/${cat.slug}/comparar`} className="btn btn-ghost">
+                  <CompareIcon className="h-4 w-4" /> Comparar modelos
+                </Link>
+              )}
+            </div>
             {products.length > 0 && (
               <nav aria-label={`Modelos de ${cat.title.toLowerCase()}`} className="mt-8 flex flex-wrap gap-2">
                 {products.map((p) => (

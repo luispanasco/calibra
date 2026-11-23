@@ -168,6 +168,25 @@ export async function getProduct(categorySlug: string, slug: string): Promise<Pr
   return (await getProducts()).find((p) => p.slug === slug && p.categorySlug === categorySlug) ?? null;
 }
 
+const alnum = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/**
+ * Ficha a la que redirigir un slug que ya no existe. Hasta el 2026-11-23 el slug
+ * era el modelo de fábrica (kwb-60a); ahora es el código Nami (scakwb-60a), para
+ * que el código de fábrica no aparezca en la web. Se compara sin guiones ni
+ * mayúsculas y sin el prefijo SCA, así también cae acá /balanceadoras/SCAKWB-60A.
+ */
+export async function getProductByLegacySlug(categorySlug: string, slug: string): Promise<Product | null> {
+  const key = alnum(slug);
+  if (!key) return null;
+  return (
+    (await getProductsByCategory(categorySlug)).find((p) => {
+      const code = alnum(p.productCode);
+      return code && (code === key || code.replace(/^sca/, "") === key);
+    }) ?? null
+  );
+}
+
 /**
  * Ruta de la ficha publicada para un código ERP (cb_product.product_code), sin
  * distinguir mayúsculas. null si no hay ficha visible (oculta o de categoría oculta).

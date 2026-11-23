@@ -18,6 +18,17 @@ export function CartIcon({ className }: P) {
   );
 }
 
+/** Dos columnas lado a lado: comparar modelos. */
+export function CompareIcon({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
+      <rect x="3" y="4" width="7" height="16" />
+      <rect x="14" y="4" width="7" height="16" />
+      <path d="M6.5 9h0M17.5 9h0M6.5 13h0M17.5 13h0" />
+    </svg>
+  );
+}
+
 export function ArrowUpRight({ className }: P) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden className={className}>

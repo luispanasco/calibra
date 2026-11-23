@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
 import { ProductCard } from "@/components/ProductCard";
 import { UseTags } from "@/components/UseTags";
-import { CartIcon, WhatsAppIcon } from "@/components/Icons";
-import { getCategory, getProduct, getProducts, getProductsByCategory, getSite } from "@/lib/data";
-import { namiStoreUrl, quoteText, whatsappUrl } from "@/lib/links";
+import { CartIcon, CompareIcon, WhatsAppIcon } from "@/components/Icons";
+import { getCategory, getProduct, getProductByLegacySlug, getProducts, getProductsByCategory, getSite } from "@/lib/data";
+import { fitTitle } from "@/lib/fit";
+import { namiStoreUrl, productUrl, quoteText, whatsappUrl } from "@/lib/links";
 
 export const revalidate = 300;
 
@@ -31,8 +32,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   const { categoria, slug } = await params;
   const [p, cat, site] = await Promise.all([getProduct(categoria, slug), getCategory(categoria), getSite()]);
-  if (!p || !cat) notFound();
-  const related = (await getProductsByCategory(cat.slug)).filter((x) => x.slug !== p.slug).slice(0, 3);
+  if (!cat) notFound();
+  if (!p) {
+    // URL vieja (modelo de fábrica) o código en otra grafía → ficha actual.
+    const moved = await getProductByLegacySlug(cat.slug, slug);
+    if (moved) permanentRedirect(productUrl(moved));
+    notFound();
+  }
+  const siblings = await getProductsByCategory(cat.slug);
+  const related = siblings.filter((x) => x.slug !== p.slug).slice(0, 3);
   const quote = whatsappUrl(site.whatsapp, quoteText(p));
   const buy = namiStoreUrl(p.productCode);
 
@@ -53,14 +61,16 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         <div className="container-cb grid gap-10 py-10 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:py-16">
-          <div className="order-2 lg:order-1">
+          <div className="@container order-2 min-w-0 lg:order-1">
             <nav aria-label="Ruta" className="mono text-xs uppercase tracking-[0.18em] text-grey">
               <Link href="/" className="hover:text-white">Inicio</Link>
               <span className="mx-2 text-orange">/</span>
               <Link href={`/${cat.slug}`} className="hover:text-white">{cat.title}</Link>
             </nav>
             <p className="eyebrow mt-8">{p.title}</p>
-            <h1 className="display metal mt-3 whitespace-nowrap text-[clamp(2.4rem,11vw,5.2rem)] lg:text-[clamp(3rem,5.4vw,5.2rem)]">{p.model}</h1>
+            <h1 className="display metal mt-3 whitespace-nowrap" style={{ fontSize: fitTitle(p.model, "5.2rem", "1.6rem") }}>
+              {p.model}
+            </h1>
             <UseTags uses={p.uses} size="md" className="mt-5" />
             {p.shortDescription && <p className="mt-5 max-w-lg text-lg leading-relaxed text-fog">{p.shortDescription}</p>}
 
@@ -82,6 +92,11 @@ export default async function ProductPage({ params }: Props) {
                 </a>
               )}
               <a href="#ficha" className="btn btn-ghost">Ficha técnica</a>
+              {siblings.length > 1 && (
+                <Link href={`/${cat.slug}/comparar?m=${p.slug}`} className="btn btn-ghost">
+                  <CompareIcon className="h-4 w-4" /> Comparar
+                </Link>
+              )}
             </div>
           </div>
 

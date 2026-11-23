@@ -10,6 +10,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: SITE_URL, priority: 1 },
     { url: `${SITE_URL}/contacto`, priority: 0.6 },
     ...categories.map((c) => ({ url: `${SITE_URL}/${c.slug}`, priority: 0.8 })),
+    ...categories
+      .filter((c) => products.filter((p) => p.categorySlug === c.slug).length > 1)
+      .map((c) => ({ url: `${SITE_URL}/${c.slug}/comparar`, priority: 0.5 })),
     ...products.map((p) => ({ url: `${SITE_URL}${productUrl(p)}`, priority: 0.7 })),
   ];
 }
