@@ -136,10 +136,9 @@ export const getCategories = cache(async (): Promise<Category[]> => {
   const sb = getSupabase();
   if (!sb) return [];
   const { data, error } = await sb.from("cb_category").select("*").order("order");
-  if (error) {
-    console.error("cb_category", error.message);
-    return [];
-  }
+  // Si Supabase falla se LANZA (no vacío): con ISR, una página sin productos
+  // quedaría cacheada. Así Next sigue sirviendo la última versión buena.
+  if (error) throw new Error(`Supabase falló al leer cb_category: ${error.message}`);
   return (data ?? []).map(mapCategory);
 });
 
@@ -147,10 +146,7 @@ export const getProducts = cache(async (): Promise<Product[]> => {
   const sb = getSupabase();
   if (!sb) return [];
   const { data, error } = await sb.from("cb_product").select("*").order("order").order("model");
-  if (error) {
-    console.error("cb_product", error.message);
-    return [];
-  }
+  if (error) throw new Error(`Supabase falló al leer cb_product: ${error.message}`);
   const catOrder = new Map((await getCategories()).map((c, n) => [c.slug, n]));
   // Un producto de una categoría oculta no se muestra (RLS ya esconde la categoría).
   // Orden: el de las categorías, y dentro de cada una el del producto.
