@@ -6,6 +6,7 @@ import { Fragment, Suspense, useEffect, useMemo, useState } from "react";
 import { ArrowRight, WhatsAppIcon } from "./Icons";
 import { Machine } from "./Machine";
 import { UseTags } from "./UseTags";
+import { fitTitle } from "@/lib/fit";
 
 export type CompareItem = {
   slug: string;
@@ -97,8 +98,10 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
   }
 
   const n = cols.length;
-  // Ancho mínimo por columna: con 2 entra en un celular; con 3 o 4 la tabla se desliza.
-  const minWidth = `${n * 9.5}rem`;
+  // Celular: cada equipo ocupa justo media pantalla. Con 2 entran enteros; con 3 o 4
+  // se desliza de a una columna (scroll-snap) y nunca queda una cortada a la mitad.
+  // Desde sm: ancho mínimo por columna, que con 4 todavía entra en una tablet.
+  const widths = { "--cmp-w": `${Math.max(2, n) * 50}%`, "--cmp-min": `${n * 9.5}rem` } as React.CSSProperties;
 
   return (
     <section className="container-cb pt-10">
@@ -125,8 +128,10 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
                 >
                   {on && <span className="h-1.5 w-1.5 rotate-45 bg-ink" />}
                 </span>
-                <span className="min-w-0">
-                  <span className="display block truncate text-sm text-white">{i.model}</span>
+                <span className="@container min-w-0 flex-1">
+                  <span className="display block whitespace-nowrap text-white" style={{ fontSize: fitTitle(i.model, "0.875rem", "0.7rem") }}>
+                    {i.model}
+                  </span>
                   <span className="line-clamp-2 block text-xs leading-snug text-fog">{i.title}</span>
                 </span>
               </button>
@@ -165,8 +170,8 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
           Deslizá para ver los {n} <span className="text-orange">→</span>
         </p>
       )}
-      <div className="-mx-4 mt-6 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-        <table className="w-full table-fixed border-collapse" style={{ minWidth }}>
+      <div className="mt-6 snap-x snap-mandatory overflow-x-auto sm:snap-none">
+        <table className="w-[var(--cmp-w)] table-fixed border-collapse sm:w-full sm:min-w-[var(--cmp-min)]" style={widths}>
           <caption className="sr-only">Comparación de {cols.map((c) => c.model).join(", ")}</caption>
           <colgroup>
             <col className="hidden w-52 lg:table-column" />
@@ -179,12 +184,12 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
             <tr>
               <td className="hidden lg:table-cell" />
               {cols.map((c) => (
-                <th key={c.slug} scope="col" className="border-l border-white/[0.06] px-2 pb-5 text-left align-bottom font-normal sm:px-4">
-                  <Link href={c.url} className="group block">
+                <th key={c.slug} scope="col" className="snap-start border-l border-white/[0.06] px-2 pb-5 text-left align-bottom font-normal sm:px-4">
+                  <Link href={c.url} className="group @container block">
                     <div className="aspect-[4/3]">
-                      <Machine src={c.image} alt={`Calibra ${c.model}`} sizes="(min-width:1024px) 280px, 45vw" reflection={false} align="center" className="h-full" />
+                      <Machine src={c.image} alt={`Calibra ${c.model}`} sizes="(min-width:1024px) 280px, 50vw" reflection={false} align="center" className="h-full" />
                     </div>
-                    <span className="display mt-3 block truncate text-[clamp(1rem,2.4vw,1.5rem)] text-white group-hover:text-orange">
+                    <span className="display mt-3 block whitespace-nowrap text-white group-hover:text-orange" style={{ fontSize: fitTitle(c.model, "1.5rem", "0.85rem") }}>
                       {c.model}
                     </span>
                     <span className="mt-0.5 block text-xs text-fog sm:text-sm">{c.title}</span>
@@ -273,7 +278,8 @@ function Table({ items, initial }: { items: CompareItem[]; initial: string[] }) 
 
 /**
  * Una fila de la tabla. En pantallas chicas la etiqueta va en su propia fila
- * arriba de los valores (así entran 2 columnas en un celular); desde lg, a la izquierda.
+ * arriba de los valores (así entran 2 columnas en un celular) y queda fija a la
+ * izquierda al deslizar, para que los valores no queden sin nombre; desde lg, a la izquierda.
  */
 function SpecRow({ label, differs, n, children }: { label: string; differs: boolean; n: number; children: React.ReactNode }) {
   const tag = (
@@ -286,8 +292,8 @@ function SpecRow({ label, differs, n, children }: { label: string; differs: bool
   return (
     <Fragment>
       <tr className="border-t border-white/[0.06] lg:hidden">
-        <th colSpan={n} scope="colgroup" className={`px-2 pt-3 text-left text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${differs ? "text-orange" : "text-grey"}`}>
-          {tag}
+        <th colSpan={n} scope="colgroup" className={`px-0 pt-3 text-left text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${differs ? "text-orange" : "text-grey"}`}>
+          <span className="sticky left-0 inline-block px-2">{tag}</span>
         </th>
       </tr>
       <tr className={`lg:border-t lg:border-white/[0.06] ${differs ? "bg-orange/[0.04]" : ""}`}>
